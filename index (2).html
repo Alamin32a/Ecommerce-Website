@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ivy Avenue — Timeless Faux Florals</title>
+  <meta name="description" content="Ivy Avenue creates refined, monochrome faux florals for timeless interiors." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#0b0b0b;
+      --muted:#5a5a5a;
+      --soft:#f5f5f5;
+      --line: rgba(0,0,0,.12);
+      --shadow: 0 18px 60px rgba(0,0,0,.10);
+      --shadow2: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    html{ scroll-behavior:smooth; background:var(--bg); color:var(--ink); }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing: -0.01em;
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x:hidden;
+    }
+
+    /* Subtle grain for editorial feel (very light) */
+    .grain{
+      position: relative;
+      isolation: isolate;
+    }
+    .grain:before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      opacity:.05;
+      z-index:-1;
+    }
+
+    /* Header behavior */
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: box-shadow .25s ease, background .25s ease, transform .25s ease;
+    }
+    .header.scrolled{
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+      background: rgba(255,255,255,.92);
+    }
+
+    /* Clean hover */
+    .hlink{
+      position: relative;
+      transition: opacity .2s ease, transform .2s ease;
+      opacity: .92;
+    }
+    .hlink:hover{ opacity: 1; transform: translateY(-1px); }
+    .hlink:after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:100%;
+      height:1px;
+      background: rgba(0,0,0,.65);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .hlink:hover:after{ transform: scaleX(1); }
+
+    .iconbtn{
+      display:inline-flex; align-items:center; justify-content:center;
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      transition: transform .2s ease, background .2s ease, opacity .2s ease;
+      opacity: .92;
+    }
+    .iconbtn:hover{ background: rgba(0,0,0,.04); transform: translateY(-1px); opacity:1; }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+      will-change: transform;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn-primary{
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 14px 34px rgba(0,0,0,.18);
+    }
+    .btn-primary:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 18px 46px rgba(0,0,0,.22);
+    }
+    .btn-ghost{
+      background: transparent;
+      color: var(--ink);
+    }
+    .btn-ghost:hover{ background: rgba(0,0,0,.04); transform: translateY(-1px); }
+
+    /* Section rhythm */
+    .section{ padding: 80px 0; }
+    @media (max-width: 768px){
+      .section{ padding: 56px 0; }
+    }
+
+    /* Hero */
+    .heroWrap{
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .heroImg{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.82) 42%, rgba(255,255,255,.10) 70%, rgba(255,255,255,0) 100%),
+        url("https://images.unsplash.com/photo-1526045478516-99145907023c?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat;
+      filter: grayscale(100%) contrast(120%) brightness(98%);
+      transform: scale(1.02);
+    }
+    .heroVignette{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1200px 600px at 20% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 60%),
+        radial-gradient(900px 500px at 85% 50%, rgba(0,0,0,.18), rgba(0,0,0,0) 55%);
+      pointer-events:none;
+      mix-blend-mode: multiply;
+      opacity:.55;
+    }
+
+    /* Minimal dividers */
+    .divider{
+      height: 1px;
+      background: var(--line);
+      width: 100%;
+    }
+
+    /* Cards / product tiles */
+    .tile{
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow2);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+    }
+    .tile:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 18px 56px rgba(0,0,0,.12);
+    }
+    .tileImg{
+      aspect-ratio: 4 / 5;
+      width: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(120%);
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .tile:hover .tileImg{
+      transform: scale(1.03);
+      filter: grayscale(100%) contrast(130%);
+    }
+
+    /* Typography */
+    .kicker{
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(0,0,0,.62);
+    }
+    .muted{ color: var(--muted); }
+
+    /* Modal / drawers */
+    .overlay{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.42);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+      z-index: 70;
+    }
+    .overlay.open{ opacity: 1; pointer-events: auto; }
+
+    .drawer{
+      position: fixed;
+      top: 0; right: 0;
+      width: min(420px, 92vw);
+      height: 100%;
+      background: #fff;
+      transform: translateX(110%);
+      transition: transform .28s ease;
+      z-index: 80;
+      box-shadow: -20px 0 70px rgba(0,0,0,.20);
+    }
+    .drawer.open{ transform: translateX(0); }
+
+    .dialog{
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+      z-index: 85;
+      padding: 18px;
+    }
+    .dialog.open{ opacity: 1; pointer-events: auto; }
+    .dialogCard{
+      width: min(720px, 96vw);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* Focus */
+    :focus-visible{
+      outline: 2px solid rgba(0,0,0,.75);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    /* Small pill for counts */
+    .badge{
+      min-width: 18px;
+      height: 18px;
+      padding: 0 6px;
+      font-size: 11px;
+      line-height: 18px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(8px, -8px);
+    }
+  </style>
+</head>
+
+<body class="grain">
+  <!-- Overlay + Drawer (Cart) -->
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+
+  <aside id="cartDrawer" class="drawer" aria-label="Cart drawer" aria-hidden="true">
+    <div class="h-full flex flex-col">
+      <div class="px-6 pt-6 pb-4 flex items-start justify-between gap-4">
+        <div>
+          <p class="kicker">Cart</p>
+          <h2 class="text-xl font-semibold tracking-tight">Your Selection</h2>
+        </div>
+        <button id="closeCart" class="iconbtn" aria-label="Close cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="divider"></div>
+
+      <div class="px-6 py-5 flex-1 overflow-auto">
+        <div id="cartEmpty" class="py-10">
+          <p class="text-sm muted">Your cart is currently empty.</p>
+          <button class="btn btn-primary mt-5" data-action="close-cart">Continue Shopping</button>
+        </div>
+
+        <div id="cartItems" class="hidden">
+          <div class="space-y-4" id="cartList"></div>
+          <div class="divider my-6"></div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm muted">Subtotal</p>
+            <p class="text-base font-semibold tracking-tight" id="cartSubtotal">$0</p>
+          </div>
+          <p class="text-xs muted mt-2">Taxes and shipping calculated at checkout.</p>
+          <button class="btn btn-primary w-full mt-5">Checkout Securely</button>
+          <button class="btn btn-ghost w-full mt-2" data-action="close-cart">Keep Browsing</button>
+        </div>
+      </div>
+
+      <div class="px-6 pb-6">
+        <p class="text-xs muted">Smooth, secure checkout powered by trusted payment providers.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Dialog (Search) -->
+  <div id="searchDialog" class="dialog" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="dialogCard">
+      <div class="px-6 py-5 flex items-center justify-between gap-4">
+        <div>
+          <p class="kicker">Search</p>
+          <h3 class="text-lg font-semibold tracking-tight">Find your stem</h3>
+        </div>
+        <button id="closeSearch" class="iconbtn" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="divider"></div>
+      <div class="p-6">
+        <label class="text-sm font-medium" for="searchInput">Search</label>
+        <div class="mt-2 flex items-center gap-3 rounded-2xl bg-white shadow-[0_12px_40px_rgba(0,0,0,.08)] px-4 py-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 19a8.5 8.5 0 1 1 0-17 8.5 8.5 0 0 1 0 17Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M16.9 16.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="searchInput" class="w-full outline-none text-base bg-transparent" placeholder="Try: anemone, ranunculus, orchid…" />
+        </div>
+
+        <div class="mt-5">
+          <p class="text-sm muted">Suggested</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button class="btn btn-ghost !px-4 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-suggest="Orchid">Orchid</button>
+            <button class="btn btn-ghost !px-4 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-suggest="Anemone">Anemone</button>
+            <button class="btn btn-ghost !px-4 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-suggest="Ranunculus">Ranunculus</button>
+            <button class="btn btn-ghost !px-4 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-suggest="Tall stems">Tall stems</button>
+          </div>
+        </div>
+
+        <div class="divider my-6"></div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <p class="text-sm muted">Use filters in Shop to narrow by colour, length, style, or price.</p>
+          <a href="#collections" class="btn btn-primary" data-action="close-search">Browse Stems</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="siteHeader" class="header">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="h-18 py-4 flex items-center justify-between gap-4">
+        <!-- Logo -->
+        <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="Ivy Avenue home">
+          <img
+            src="https://dev-pimpmypool.pantheonsite.io/wp-content/uploads/2026/01/IMG_3838-1.jpeg"
+            alt="Ivy Avenue logo"
+            class="h-10 w-10 rounded-full object-cover"
+            loading="eager"
+          />
+          <div class="hidden sm:block leading-tight">
+            <p class="text-sm font-semibold tracking-tight">Ivy Avenue</p>
+            <p class="text-xs muted">Monochrome faux florals</p>
+          </div>
+        </a>
+
+        <!-- Nav -->
+        <nav class="hidden md:flex items-center gap-8 text-sm">
+          <a class="hlink" href="#top">Home</a>
+          <a class="hlink" href="#collections">Shop</a>
+          <a class="hlink" href="#about">About</a>
+          <a class="hlink" href="#reviews">Reviews</a>
+          <a class="hlink" href="#contact">Contact</a>
+        </nav>
+
+        <!-- Utility -->
+        <div class="flex items-center gap-1 sm:gap-2">
+          <button id="openSearch" class="iconbtn" aria-label="Search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10.5 19a8.5 8.5 0 1 1 0-17 8.5 8.5 0 0 1 0 17Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M16.9 16.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <button id="openCart" class="iconbtn relative" aria-label="Cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6.5 9.5h14l-1.2 10.5a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 9.5V7.8A3.8 3.8 0 0 1 12.8 4h.4A3.8 3.8 0 0 1 17 7.8V9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span id="cartCount" class="badge absolute top-1 right-1 hidden">0</span>
+          </button>
+
+          <button class="iconbtn" aria-label="Account">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 21a8 8 0 1 0-16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+
+          <button id="openMobileMenu" class="iconbtn md:hidden" aria-label="Open menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden pb-4">
+        <div class="divider mb-4"></div>
+        <nav class="grid gap-3 text-sm">
+          <a class="hlink w-fit" href="#top" data-action="close-mobile">Home</a>
+          <a class="hlink w-fit" href="#collections" data-action="close-mobile">Shop</a>
+          <a class="hlink w-fit" href="#about" data-action="close-mobile">About</a>
+          <a class="hlink w-fit" href="#reviews" data-action="close-mobile">Reviews</a>
+          <a class="hlink w-fit" href="#contact" data-action="close-mobile">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="section">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="heroWrap">
+          <div class="heroImg" aria-hidden="true"></div>
+          <div class="heroVignette" aria-hidden="true"></div>
+
+          <div class="relative p-7 sm:p-12 lg:p-16">
+            <div class="max-w-2xl">
+              <p class="kicker">Timeless • Monochrome • Refined</p>
+              <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.04]">
+                Timeless Faux Florals, Refined to Perfection
+              </h1>
+              <p class="mt-5 text-base sm:text-lg muted leading-relaxed">
+                Elegant, monochrome faux flowers designed to elevate modern interiors. Thoughtfully crafted stems that bring beauty without compromise.
+              </p>
+
+              <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a href="#collections" class="btn btn-primary">Shop the Collection</a>
+                <a href="#seasonal" class="btn btn-ghost">Explore Seasonal Highlights</a>
+              </div>
+
+              <div class="mt-9 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="rounded-2xl bg-white/70 backdrop-blur-md px-5 py-4 shadow-[0_12px_40px_rgba(0,0,0,.08)]">
+                  <p class="text-sm font-semibold tracking-tight">Monochrome palette</p>
+                  <p class="text-xs muted mt-1">Cohesive styling, every time.</p>
+                </div>
+                <div class="rounded-2xl bg-white/70 backdrop-blur-md px-5 py-4 shadow-[0_12px_40px_rgba(0,0,0,.08)]">
+                  <p class="text-sm font-semibold tracking-tight">Premium realism</p>
+                  <p class="text-xs muted mt-1">Texture, scale, and finish.</p>
+                </div>
+                <div class="rounded-2xl bg-white/70 backdrop-blur-md px-5 py-4 shadow-[0_12px_40px_rgba(0,0,0,.08)]">
+                  <p class="text-sm font-semibold tracking-tight">Zero upkeep</p>
+                  <p class="text-xs muted mt-1">No water, no wilt, no fuss.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute right-5 bottom-5 sm:right-8 sm:bottom-8 hidden lg:flex items-center gap-2 bg-white/70 backdrop-blur-md px-4 py-3 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,.08)]">
+              <span class="text-xs muted">Scroll</span>
+              <span class="inline-block w-10 h-[1px] bg-black/30"></span>
+              <span class="text-xs font-medium">Discover</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Introduction -->
+    <section class="section pt-0">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div>
+            <p class="kicker">Welcome to Ivy Avenue</p>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight leading-tight">
+              Understated elegance, designed in monochrome.
+            </h2>
+            <div class="mt-6 space-y-4 text-base muted leading-relaxed">
+              <p>
+                Ivy Avenue is a refined faux-flower brand created for those who appreciate understated elegance. Our collections are intentionally designed in a monochrome palette, allowing form, texture, and craftsmanship to take centre stage.
+              </p>
+              <p>
+                Every stem is curated to feel timeless—never trend-driven—so your arrangements remain effortlessly sophisticated season after season. With no maintenance required, Ivy Avenue florals offer enduring beauty for modern living.
+              </p>
+            </div>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a href="#about" class="btn btn-primary">Explore Our Story</a>
+              <a href="#collections" class="btn btn-ghost">Shop Signature Stems</a>
+            </div>
+
+            <div class="mt-10">
+              <div class="divider"></div>
+              <div class="mt-6 grid grid-cols-2 gap-6">
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Editorial finish</p>
+                  <p class="text-xs muted mt-1">Sharp shadows, clean negative space.</p>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Curated selection</p>
+                  <p class="text-xs muted mt-1">Fewer pieces, chosen with care.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="rounded-[26px] overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,.14)]">
+              <img
+                src="https://dev-pimpmypool.pantheonsite.io/wp-content/uploads/2026/01/IMG_7555-scaled.jpeg"
+                alt="Monochrome faux stem close-up photography"
+                class="w-full h-[520px] sm:h-[640px] object-cover"
+                style="filter: grayscale(100%) contrast(120%);"
+                loading="lazy"
+              />
+            </div>
+            <div class="absolute -bottom-5 -left-4 sm:-left-6 bg-white/85 backdrop-blur-md rounded-2xl px-5 py-4 shadow-[0_18px_60px_rgba(0,0,0,.12)] max-w-[320px]">
+              <p class="text-xs muted">Single-stem detail</p>
+              <p class="text-sm font-semibold tracking-tight mt-1">Texture-first design, photographed with precision.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Collections -->
+    <section id="collections" class="section">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div class="max-w-2xl">
+            <p class="kicker">Signature Stems</p>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Discover our most-loved faux florals.</h2>
+            <p class="mt-4 text-base muted leading-relaxed">
+              A curated selection of individual stems designed to work beautifully alone or combined into bespoke arrangements. Each piece is photographed with precision to showcase detail, scale, and texture.
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <a href="#collections" class="btn btn-primary" id="viewAllStems">View All Stems</a>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Product 1 -->
+          <article class="tile">
+            <img class="tileImg" src="https://images.unsplash.com/photo-1526045478516-99145907023c?auto=format&fit=crop&w=1200&q=80" alt="Monochrome Orchid Stem" loading="lazy">
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Orchid Stem</p>
+                  <p class="text-xs muted mt-1">Sculptural, high-contrast</p>
+                </div>
+                <p class="text-sm font-semibold">$28</p>
+              </div>
+              <button class="btn btn-primary w-full mt-4" data-add="Orchid Stem" data-price="28">Add to Cart</button>
+            </div>
+          </article>
+
+          <!-- Product 2 -->
+          <article class="tile">
+            <img class="tileImg" src="https://cdn.ecommercedns.uk/files/2/236502/6/42950436/1076-artificial-anemone-lilac-flower-stem.jpg" alt="Monochrome Anemone Stem" loading="lazy">
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Anemone Stem</p>
+                  <p class="text-xs muted mt-1">Crisp petals, bold centre</p>
+                </div>
+                <p class="text-sm font-semibold">$18</p>
+              </div>
+              <button class="btn btn-primary w-full mt-4" data-add="Anemone Stem" data-price="18">Add to Cart</button>
+            </div>
+          </article>
+
+          <!-- Product 3 -->
+          <article class="tile">
+            <img class="tileImg" src="https://www.realflowers.co.uk/pub/media/catalog/product/cache/0a16fe6c5a12b077b5913b4872a45d22/r/a/ranunculus_pewter_pot.jpg" alt="Monochrome Ranunculus Stem" loading="lazy">
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Ranunculus Stem</p>
+                  <p class="text-xs muted mt-1">Layered texture, refined</p>
+                </div>
+                <p class="text-sm font-semibold">$16</p>
+              </div>
+              <button class="btn btn-primary w-full mt-4" data-add="Ranunculus Stem" data-price="16">Add to Cart</button>
+            </div>
+          </article>
+
+          <!-- Product 4 -->
+          <article class="tile">
+            <img class="tileImg" src="https://static.vecteezy.com/system/resources/thumbnails/011/034/455/small/amber-cosmetic-bottles-with-pipette-on-white-podium-product-packaging-with-natural-ruscus-branch-anti-aging-serum-with-peptides-cosmetics-mockup-spa-concept-photo.jpg" alt="Monochrome Branch Stem" loading="lazy">
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold tracking-tight">Branch Stem</p>
+                  <p class="text-xs muted mt-1">Architectural silhouette</p>
+                </div>
+                <p class="text-sm font-semibold">$22</p>
+              </div>
+              <button class="btn btn-primary w-full mt-4" data-add="Branch Stem" data-price="22">Add to Cart</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Ivy Avenue -->
+    <section class="section pt-0">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="rounded-[26px] bg-white shadow-[0_18px_70px_rgba(0,0,0,.08)] p-7 sm:p-10">
+          <div class="max-w-2xl">
+            <p class="kicker">Designed with Intention</p>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Why Ivy Avenue</h2>
+          </div>
+
+          <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+              <div class="divider"></div>
+              <div class="pt-5">
+                <p class="text-base font-semibold tracking-tight">Refined Aesthetic</p>
+                <p class="text-sm muted mt-2 leading-relaxed">A strictly monochrome palette ensures a cohesive, elevated look across every arrangement.</p>
+              </div>
+              <div class="divider"></div>
+              <div class="pt-5">
+                <p class="text-base font-semibold tracking-tight">Premium Craftsmanship</p>
+                <p class="text-sm muted mt-2 leading-relaxed">Each stem is selected for realism, structure, and lasting quality.</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="divider"></div>
+              <div class="pt-5">
+                <p class="text-base font-semibold tracking-tight">Effortless Styling</p>
+                <p class="text-sm muted mt-2 leading-relaxed">Create impactful arrangements without upkeep, water, or seasonal replacement.</p>
+              </div>
+              <div class="divider"></div>
+              <div class="pt-5">
+                <p class="text-base font-semibold tracking-tight">Considered Curation</p>
+                <p class="text-sm muted mt-2 leading-relaxed">We focus on fewer, better designs—never overproduction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section pt-0">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div class="max-w-2xl">
+            <p class="kicker">How It Works</p>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Simple. Elegant. Seamless.</h2>
+          </div>
+          <div class="flex gap-3">
+            <a href="#contact" class="btn btn-ghost">Need help choosing?</a>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-4 gap-5">
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <p class="kicker">01</p>
+            <p class="mt-3 text-base font-semibold tracking-tight">Browse &amp; Filter</p>
+            <p class="mt-2 text-sm muted leading-relaxed">Quickly narrow your selection by colour, length, style, or price.</p>
+          </div>
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <p class="kicker">02</p>
+            <p class="mt-3 text-base font-semibold tracking-tight">Select Your Stems</p>
+            <p class="mt-2 text-sm muted leading-relaxed">Purchase individual pieces or build custom combinations.</p>
+          </div>
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <p class="kicker">03</p>
+            <p class="mt-3 text-base font-semibold tracking-tight">Checkout Securely</p>
+            <p class="mt-2 text-sm muted leading-relaxed">Smooth, secure checkout powered by trusted payment providers.</p>
+          </div>
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <p class="kicker">04</p>
+            <p class="mt-3 text-base font-semibold tracking-tight">Enjoy Timeless Beauty</p>
+            <p class="mt-2 text-sm muted leading-relaxed">Arrangements that remain flawless year-round.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seasonal Highlight -->
+    <section id="seasonal" class="section pt-0">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          <div class="rounded-[26px] overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,.14)] relative">
+            <div class="absolute inset-0"
+                 style="
+                   background:
+                     linear-gradient(180deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.35) 100%),
+                     url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=2000&q=90') center/cover no-repeat;
+                   filter: grayscale(100%) contrast(125%);
+                 "
+                 aria-hidden="true"></div>
+            <div class="relative h-full min-h-[360px] p-7 sm:p-10 flex items-end">
+              <div class="bg-white/85 backdrop-blur-md rounded-2xl p-5 shadow-[0_18px_60px_rgba(0,0,0,.14)] max-w-md">
+                <p class="kicker">Seasonal Edit</p>
+                <p class="mt-2 text-lg font-semibold tracking-tight">Limited highlights, timeless finish.</p>
+                <p class="mt-2 text-sm muted leading-relaxed">
+                  Our seasonal selections spotlight stems that complement the current mood—without sacrificing Ivy Avenue’s timeless aesthetic.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-[26px] bg-white shadow-[0_18px_70px_rgba(0,0,0,.08)] p-7 sm:p-10 flex flex-col justify-between">
+            <div>
+              <p class="kicker">Seasonal Edit</p>
+              <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Fresh inspiration, still Ivy Avenue.</h2>
+              <p class="mt-5 text-base muted leading-relaxed">
+                These limited highlights offer fresh inspiration while remaining true to our refined design philosophy.
+              </p>
+
+              <div class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl bg-[rgba(0,0,0,.03)] p-5">
+                  <p class="text-sm font-semibold tracking-tight">Moody silhouettes</p>
+                  <p class="text-xs muted mt-1">Strong lines, sharp shadows.</p>
+                </div>
+                <div class="rounded-2xl bg-[rgba(0,0,0,.03)] p-5">
+                  <p class="text-sm font-semibold tracking-tight">Minimal palettes</p>
+                  <p class="text-xs muted mt-1">Cohesion across spaces.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+              <a href="#collections" class="btn btn-primary">Shop the Seasonal Edit</a>
+              <button class="btn btn-ghost" id="openCartFromSeasonal">View Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="section">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div class="max-w-2xl">
+            <p class="kicker">Loved by Our Customers</p>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Thoughtfully chosen, beautifully styled.</h2>
+            <p class="mt-4 text-base muted leading-relaxed">Consistently admired in modern interiors.</p>
+          </div>
+          <div class="flex gap-3">
+            <a href="#contact" class="btn btn-ghost">Read &amp; Write Reviews</a>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-1" aria-label="5 star rating">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <p class="text-xs muted">Verified</p>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed">
+              “The quality is exceptional, and the monochrome design fits perfectly into my space. Ivy Avenue has completely changed how I style florals at home.”
+            </p>
+            <p class="mt-4 text-xs muted">— Verified Customer</p>
+          </div>
+
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-1" aria-label="5 star rating">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <p class="text-xs muted">Verified</p>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed">
+              “Photographed beautifully and even better in person. The stems look real, and the finish is so clean and modern.”
+            </p>
+            <p class="mt-4 text-xs muted">— Verified Customer</p>
+          </div>
+
+          <div class="rounded-2xl bg-white shadow-[0_14px_50px_rgba(0,0,0,.08)] p-6">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-1" aria-label="5 star rating">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <p class="text-xs muted">Verified</p>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed">
+              “I love that it’s minimal and not overly trendy. It feels timeless and elevated without trying too hard.”
+            </p>
+            <p class="mt-4 text-xs muted">— Verified Customer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Preview -->
+    <section id="about" class="section pt-0">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="rounded-[26px] overflow-hidden bg-white shadow-[0_18px_70px_rgba(0,0,0,.08)]">
+          <div class="grid grid-cols-1 lg:grid-cols-2">
+            <div class="p-7 sm:p-10">
+              <p class="kicker">Our Story</p>
+              <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Simplicity is the ultimate sophistication.</h2>
+              <p class="mt-5 text-base muted leading-relaxed">
+                Ivy Avenue was founded on the belief that simplicity is the ultimate form of sophistication. Inspired by modern interiors and editorial styling, we create faux florals that feel curated, calm, and intentional.
+              </p>
+              <p class="mt-4 text-base muted leading-relaxed">
+                Our focus is not excess—but elegance. Every stem exists to complement your space, not overwhelm it.
+              </p>
+              <div class="mt-7 flex flex-col sm:flex-row gap-3">
+                <a href="#contact" class="btn btn-primary">Read Our Story</a>
+                <a href="#collections" class="btn btn-ghost">Shop Stems</a>
+              </div>
+            </div>
+
+            <div class="relative min-h-[320px]">
+              <div class="absolute inset-0"
+                style="
+                  background:
+                    linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.20) 55%, rgba(0,0,0,.30) 100%),
+                    url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=2200&q=90') center/cover no-repeat;
+                  filter: grayscale(100%) contrast(125%);
+                "
+                aria-hidden="true"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="bg-white/85 backdrop-blur-md rounded-2xl p-5 shadow-[0_18px_60px_rgba(0,0,0,.12)]">
+                  <p class="text-sm font-semibold tracking-tight">Calm, intentional styling</p>
+                  <p class="text-xs muted mt-1">Designed to feel curated—not cluttered.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section id="contact" class="section">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="rounded-[26px] bg-white shadow-[0_18px_70px_rgba(0,0,0,.08)] p-7 sm:p-10">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <p class="kicker">Stay Inspired</p>
+              <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Be first to discover what’s next.</h2>
+              <p class="mt-4 text-base muted leading-relaxed">
+                New arrivals, seasonal edits, and styling inspiration—delivered with restraint.
+              </p>
+            </div>
+
+            <form id="newsletterForm" class="rounded-2xl bg-[rgba(0,0,0,.03)] p-5 sm:p-6">
+              <label for="email" class="text-sm font-semibold tracking-tight">Email Address</label>
+              <div class="mt-3 flex flex-col sm:flex-row gap-3">
+                <input
+                  id="email"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  required
+                  class="w-full rounded-2xl px-4 py-3 bg-white shadow-[0_12px_40px_rgba(0,0,0,.08)] outline-none"
+                  placeholder="you@domain.com"
+                />
+                <button class="btn btn-primary whitespace-nowrap" type="submit">Subscribe</button>
+              </div>
+              <p id="newsletterMsg" class="text-xs muted mt-3">We respect your inbox. Unsubscribe anytime.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <p class="text-lg font-semibold tracking-tight">Ivy Avenue</p>
+          <p class="text-sm text-white/75 mt-3 leading-relaxed">
+            Ivy Avenue creates refined faux florals for timeless interiors.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold tracking-tight">Navigate</p>
+          <div class="mt-4 grid gap-2 text-sm text-white/80">
+            <a href="#collections" class="hover:text-white transition">Shop</a>
+            <a href="#about" class="hover:text-white transition">About</a>
+            <a href="#reviews" class="hover:text-white transition">Reviews</a>
+            <a href="#contact" class="hover:text-white transition">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold tracking-tight">Information</p>
+          <div class="mt-4 grid gap-2 text-sm text-white/80">
+            <a href="#contact" class="hover:text-white transition">Shipping &amp; Returns</a>
+            <a href="#contact" class="hover:text-white transition">Privacy Policy</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold tracking-tight">Social</p>
+          <div class="mt-4 grid gap-2 text-sm text-white/80">
+            <a href="#contact" class="hover:text-white transition">Instagram</a>
+            <a href="#contact" class="hover:text-white transition">Pinterest</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 h-px bg-white/15"></div>
+
+      <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-sm text-white/70">© 2026 | Ivy Avenue. All Rights Reserved.</p>
+        <div class="flex items-center gap-3 text-xs text-white/60">
+          <span class="inline-block w-2 h-2 rounded-full bg-white/50"></span>
+          <span>Monochrome by design</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    const overlay = document.getElementById('overlay');
+
+    const cartDrawer = document.getElementById('cartDrawer');
+    const openCart = document.getElementById('openCart');
+    const closeCart = document.getElementById('closeCart');
+    const cartCount = document.getElementById('cartCount');
+    const cartEmpty = document.getElementById('cartEmpty');
+    const cartItems = document.getElementById('cartItems');
+    const cartList = document.getElementById('cartList');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+
+    const searchDialog = document.getElementById('searchDialog');
+    const openSearch = document.getElementById('openSearch');
+    const closeSearch = document.getElementById('closeSearch');
+    const searchInput = document.getElementById('searchInput');
+
+    const mobileMenu = document.getElementById('mobileMenu');
+    const openMobileMenu = document.getElementById('openMobileMenu');
+
+    const openCartFromSeasonal = document.getElementById('openCartFromSeasonal');
+
+    // State
+    const CART_KEY = 'ivy_cart_v1';
+    let cart = [];
+
+    function money(n){
+      return new Intl.NumberFormat('en-US', { style:'currency', currency:'USD' }).format(n);
+    }
+
+    function loadCart(){
+      try{
+        cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]') || [];
+      }catch(e){
+        cart = [];
+      }
+      renderCart();
+    }
+
+    function saveCart(){
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function cartQty(){
+      return cart.reduce((sum, it) => sum + it.qty, 0);
+    }
+
+    function cartTotal(){
+      return cart.reduce((sum, it) => sum + it.qty * it.price, 0);
+    }
+
+    function renderCart(){
+      const qty = cartQty();
+      if(qty > 0){
+        cartCount.textContent = qty;
+        cartCount.classList.remove('hidden');
+      }else{
+        cartCount.classList.add('hidden');
+      }
+
+      if(cart.length === 0){
+        cartEmpty.classList.remove('hidden');
+        cartItems.classList.add('hidden');
+        cartList.innerHTML = '';
+        cartSubtotal.textContent = money(0);
+        return;
+      }
+
+      cartEmpty.classList.add('hidden');
+      cartItems.classList.remove('hidden');
+      cartSubtotal.textContent = money(cartTotal());
+
+      cartList.innerHTML = cart.map((it, idx) => {
+        return `
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold tracking-tight">${escapeHtml(it.name)}</p>
+              <p class="text-xs muted mt-1">${money(it.price)} • Qty ${it.qty}</p>
+              <div class="mt-3 flex items-center gap-2">
+                <button class="btn btn-ghost !px-3 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-dec="${idx}" aria-label="Decrease quantity">−</button>
+                <button class="btn btn-ghost !px-3 !py-2 text-sm bg-[rgba(0,0,0,.03)] hover:bg-[rgba(0,0,0,.05)]" data-inc="${idx}" aria-label="Increase quantity">+</button>
+                <button class="btn btn-ghost !px-4 !py-2 text-sm" data-remove="${idx}">Remove</button>
+              </div>
+            </div>
+            <p class="text-sm font-semibold">${money(it.price * it.qty)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));
+    }
+
+    function openOverlay(){
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden','false');
+    }
+    function closeOverlay(){
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden','true');
+    }
+
+    function openCartDrawer(){
+      closeSearchDialog();
+      cartDrawer.classList.add('open');
+      cartDrawer.setAttribute('aria-hidden','false');
+      openOverlay();
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCartDrawer(){
+      cartDrawer.classList.remove('open');
+      cartDrawer.setAttribute('aria-hidden','true');
+      closeOverlay();
+      document.body.style.overflow = '';
+    }
+
+    function openSearchDialog(){
+      closeCartDrawer();
+      searchDialog.classList.add('open');
+      searchDialog.setAttribute('aria-hidden','false');
+      openOverlay();
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => searchInput && searchInput.focus(), 30);
+    }
+    function closeSearchDialog(){
+      searchDialog.classList.remove('open');
+      searchDialog.setAttribute('aria-hidden','true');
+      closeOverlay();
+      document.body.style.overflow = '';
+    }
+
+    function closeAllOverlays(){
+      closeCartDrawer();
+      closeSearchDialog();
+    }
+
+    // Sticky header shadow
+    function onScroll(){
+      if(window.scrollY > 8) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+
+    // Mobile menu
+    openMobileMenu.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-action="close-mobile"]');
+      if(a) mobileMenu.classList.add('hidden');
+    });
+
+    // Search controls
+    openSearch.addEventListener('click', openSearchDialog);
+    closeSearch.addEventListener('click', closeSearchDialog);
+
+    // Cart controls
+    openCart.addEventListener('click', openCartDrawer);
+    closeCart.addEventListener('click', closeCartDrawer);
+    if(openCartFromSeasonal) openCartFromSeasonal.addEventListener('click', openCartDrawer);
+
+    // Overlay click closes
+    overlay.addEventListener('click', closeAllOverlays);
+
+    // Escape closes
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') closeAllOverlays();
+    });
+
+    // Add to cart buttons
+    document.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('[data-add]');
+      if(addBtn){
+        const name = addBtn.getAttribute('data-add');
+        const price = Number(addBtn.getAttribute('data-price') || 0);
+        const found = cart.find(x => x.name === name);
+        if(found) found.qty += 1;
+        else cart.push({ name, price, qty: 1 });
+        saveCart();
+        renderCart();
+        openCartDrawer();
+        return;
+      }
+
+      const inc = e.target.closest('[data-inc]');
+      if(inc){
+        const idx = Number(inc.getAttribute('data-inc'));
+        if(cart[idx]) cart[idx].qty += 1;
+        saveCart(); renderCart();
+        return;
+      }
+
+      const dec = e.target.closest('[data-dec]');
+      if(dec){
+        const idx = Number(dec.getAttribute('data-dec'));
+        if(cart[idx]){
+          cart[idx].qty -= 1;
+          if(cart[idx].qty <= 0) cart.splice(idx, 1);
+        }
+        saveCart(); renderCart();
+        return;
+      }
+
+      const rem = e.target.closest('[data-remove]');
+      if(rem){
+        const idx = Number(rem.getAttribute('data-remove'));
+        if(cart[idx]) cart.splice(idx, 1);
+        saveCart(); renderCart();
+        return;
+      }
+
+      const closeCartAction = e.target.closest('[data-action="close-cart"]');
+      if(closeCartAction){
+        closeCartDrawer();
+        return;
+      }
+
+      const closeSearchAction = e.target.closest('[data-action="close-search"]');
+      if(closeSearchAction){
+        closeSearchDialog();
+        return;
+      }
+
+      const suggest = e.target.closest('[data-suggest]');
+      if(suggest){
+        const v = suggest.getAttribute('data-suggest');
+        searchInput.value = v;
+        searchInput.focus();
+      }
+    });
+
+    // Newsletter
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterMsg = document.getElementById('newsletterMsg');
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('email').value || '').trim();
+      if(!email){
+        newsletterMsg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      newsletterMsg.textContent = 'Subscribed. Watch your inbox for new arrivals and seasonal edits.';
+      newsletterForm.reset();
+    });
+
+    // Initialize
+    loadCart();
+  </script>
+</body>
+</html>
